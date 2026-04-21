@@ -8,7 +8,7 @@ services:
     container_name: trendradar
     restart: unless-stopped
     environment:
-      - TZ=UTC
+      - TZ=America/New_York
       - PYTHONUNBUFFERED=1
     env_file:
       - .env
@@ -20,14 +20,16 @@ services:
       - "${PORT:-8080}:8080"
     networks:
       - trendradar_net
+    depends_on:
+      redis:
+        condition: service_healthy
 
   # Optional: Redis for caching trend data
   redis:
     image: redis:7-alpine
     container_name: trendradar_redis
     restart: unless-stopped
-    ports:
-      - "6379:6379"
+    # not exposing redis port externally for security
     volumes:
       - redis_data:/data
     networks:
