@@ -8,7 +8,7 @@ services:
     container_name: trendradar
     restart: unless-stopped
     environment:
-      - TZ=America/New_York
+      - TZ=Europe/London
       - PYTHONUNBUFFERED=1
     env_file:
       - .env
@@ -36,7 +36,7 @@ services:
       - trendradar_net
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
       retries: 5
 
